@@ -2,6 +2,9 @@
 //
 //物件管理リスト
 //
+
+use function PHPSTORM_META\sql_injection_subst;
+
 function fnSqlArticleList($flg, $sDel, $sArticle, $sRoom, $sKeyPlace, $sArticleNote, $sKeyBox, $sDrawing, $sSellCharge, $sPage, $orderBy, $orderTo)
 {
 	switch ($flg) {
@@ -9,7 +12,7 @@ function fnSqlArticleList($flg, $sDel, $sArticle, $sRoom, $sKeyPlace, $sArticleN
 			$sql  = "SELECT COUNT(*)";
 			break;
 		case 1:
-			$sql  = "SELECT ARTICLENO, ARTICLE, RO0M, KEYPLACE, ARTICLENOTE, KEYBOX, DRAWING, SELLCHARGE";
+			$sql  = "SELECT ARTICLENO, ARTICLE, ROOM, KEYPLACE, ARTICLENOTE, KEYBOX, DRAWING, SELLCHARGE";
 			break;
 	}
 	$sql .= " FROM TBLARTICLE";
@@ -39,7 +42,7 @@ function fnSqlArticleList($flg, $sDel, $sArticle, $sRoom, $sKeyPlace, $sArticleN
 		$sql .= " ORDER BY $orderBy $orderTo";
 	}
 	if ($flg) {
-		$sql .= " LIMIT " . (($sPage + 1) * PAGE_MAX) . ", " . PAGE_MAX;
+		$sql .= " LIMIT " . (($sPage - 1) * PAGE_MAX) . ", " . PAGE_MAX;
 	}
 
 	return ($sql);
@@ -98,7 +101,6 @@ function fnSqlArticleInsert($articleNo, $article, $room, $keyPlace, $address, $a
 		. " '', '', '', '', '', '', '', '', '', '', '', '',"
 		. " '', '', '', '', '', '', '', '', '', '', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$del',"
 		. " '$drawing', '', '', '', '', '', '' )";
-	var_dump($sql);
 	return ($sql);
 }
 
