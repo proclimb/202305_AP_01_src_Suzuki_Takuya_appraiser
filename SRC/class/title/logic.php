@@ -189,6 +189,7 @@ function subFTitleDelete()
     } else {
         $sql = fnSqlFTitleDelete($DocNo);
         $res = mysqli_query($conn, $sql);
+        subTitlePage1(); // ← 追加
     }
 
     $_REQUEST['act'] = 'fTitleSearch';
